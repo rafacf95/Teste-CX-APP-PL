@@ -5,21 +5,13 @@ const pesquisaCep = (valor) => {
 
     if (validaCep.test(cep)) {
 
-      const resultado = await(
-        await fetch('https://viacep.com.br/ws/' + cep + '/json/')
+      const resultado = fetch('https://viacep.com.br/ws/' + cep + '/json/').then(
+        (response) => {
+          return response.json()
+        }
       )
 
       return resultado
-
-      // fetch('https://viacep.com.br/ws/' + cep + '/json/').then(
-      //   (response) => {
-      //     return response.json()
-      //   }
-      // ).then(
-      //   (result) => {
-      //     console.log(result)
-      //     return result
-      //   })
     }
   }
 };
