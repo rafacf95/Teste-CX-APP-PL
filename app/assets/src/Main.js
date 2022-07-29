@@ -7,7 +7,7 @@ const client = ZAFClient.init();
 //   settings = metadata.settings;
 // });
 
-
+const data = await client.get(['ticket.id', 'ticket.requester.id'])
 
 const Main = async () => {
 
@@ -20,6 +20,7 @@ const Main = async () => {
         </label>
         <br />
       <button type="submit">Pesquisar</button> 
+      <br />
       <span id="erro"></span>
     </form>
   </div>
@@ -35,8 +36,23 @@ const Main = async () => {
   document.getElementById('form').addEventListener('submit', async (e) => {
     e.preventDefault()
     const cep = await document.getElementById('cep').value
-    const res = Core.pesquisaCep(cep)
-    console.log(res)
+    const res = await Core.pesquisaCep(cep)
+
+    if(res){
+      const dadosCep = await Core.criaComentario(res)
+      client.request({
+        url: `/api/v2/tickets/${data['ticket.id']}`,
+        type: 'PUT',
+        data: {
+          ticket: {
+            comment: {
+              body: dadosCep
+            }
+          }
+        }
+      })
+
+    }
 
   })
 };
