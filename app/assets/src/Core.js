@@ -1,5 +1,5 @@
-const pesquisaCep = (valor) => {
-  var cep = valor.replace(/\D/g, '');
+const pesquisaCep = (value) => {
+  var cep = value.replace(/\D/g, '');
   if (cep != '') {
     var validaCep = /^[0-9]{8}$/
 
@@ -10,9 +10,16 @@ const pesquisaCep = (valor) => {
           return response.json()
         }
       )
-
+      if(resultado.erro){
+        document.getElementById('erro').innerHTML = "CEP não encontrado."
+        return undefined
+      }
+      document.getElementById('erro').innerHTML = ""
       return resultado
     }
+
+    document.getElementById('erro').innerHTML = "CEP inválido."
+    return undefined
   }
 };
 
