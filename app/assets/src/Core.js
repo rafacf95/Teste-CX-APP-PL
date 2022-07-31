@@ -1,15 +1,9 @@
 const pesquisaCep = async (value) => {
-  var cep = value.replace(/\D/g, '');
+  const cep = value.replace(/\D/g, '');
   if (cep != '') {
-    var validaCep = /^[0-9]{8}$/
+    const validaCep = /^[0-9]{8}$/
 
     if (validaCep.test(cep)) {
-
-      // const resultado = fetch('https://viacep.com.br/ws/' + cep + '/json/').then(
-      //   (response) => {
-      //     return response.json()
-      //   }
-      // )
 
       const resultado = await (await fetch('https://viacep.com.br/ws/' + cep + '/json/')).json()
 
@@ -21,9 +15,9 @@ const pesquisaCep = async (value) => {
       return resultado
     }
 
-    document.getElementById('erro').innerHTML = "CEP inválido."
-    return undefined
   }
+  document.getElementById('erro').innerHTML = "CEP inválido."
+  return undefined
 };
 
 const criaComentario = async (value) => {
